@@ -46,34 +46,30 @@
 
   <div id="result"></div>
 
-  <script>
-    async function checkGrammar() {
-      const inputText = document.getElementById("inputText").value;
-      const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = "Checking grammar...";
+ <script>
+  async function checkGrammar() {
+    const inputText = document.getElementById("inputText").value;
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "Checking...";
 
-      try {
-        const response = await fetch("/api/check-grammar", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: inputText }),
-        });
+    try {
+      const response = await fetch("/api/grammar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: inputText }),
+      });
 
-        const data = await response.json();
-
-        if (data.result) {
-          resultDiv.innerHTML = data.result;
-        } else {
-          resultDiv.innerHTML = "❌ Error: Could not get result.";
-        }
-      } catch (err) {
-        resultDiv.innerHTML = "❌ Error checking grammar. See console.";
-        console.error(err);
-      }
+      const data = await response.json();
+      resultDiv.innerHTML = data.result;
+    } catch (err) {
+      resultDiv.innerHTML = "Error checking grammar.";
+      console.error(err);
     }
-  </script>
+  }
+</script>
+
 
 </body>
 </html>
